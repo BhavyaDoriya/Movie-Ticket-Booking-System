@@ -631,30 +631,29 @@ class AnimatedMovies extends Movies {
     }
 }
 
-class Customer
-{
+class Customer {
+    static Scanner s = new Scanner(System.in);
     static String[] names = new String[10];      // Stores names
     static String[] usernames = new String[10];  // Stores usernames
     static String[] passwords = new String[10];  // Stores passwords
     static int customerCount = 5; // Number of existing customers
-    static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         // Pre-populating with 5 customers
-        addCustomer(0, "JohnDoe", "john123", "pass123");
-        addCustomer(1, "AliceSmith", "alice456", "alicePass");
-        addCustomer(2, "BobWilliams", "bob789", "bobSecret");
-        addCustomer(3, "CharlieBrown", "charlie999", "charlie123");
-        addCustomer(4, "DavidJones", "david567", "davidPass");
+        addCustomer(0, "Bhavya", "bhavya123", "bhavyaPass");
+        addCustomer(1, "Aryan", "aryan123", "aryanPass");
+        addCustomer(2, "Samil", "samil123", "samilPass");
+        addCustomer(3, "Jaineesh", "jaineesh123", "jaineeshPass");
+        addCustomer(4, "Jenish", "jenish123", "jenishPass");
 
         while (true) {
             System.out.println("\nWelcome! Choose an option:");
             System.out.println("1. Create Account");
-            System.out.println("2. Login");
+            System.out.println("2. Log into Existing Account");
             System.out.println("3. Exit");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            int choice = s.nextInt();
+            s.nextLine(); // Consume newline
 
             switch (choice) {
                 case 1:
@@ -685,20 +684,11 @@ class Customer
         }
 
         System.out.println("Enter your name: ");
-        String name = scanner.nextLine();
-
-        // Check if the name already exists
-        for (int i = 0; i < customerCount; i++) {
-            if (names[i].equals(name)) {
-                System.out.println("An account with this name already exists. Try logging in.");
-                return;
-            }
-        }
+        String name = s.nextLine();
 
         System.out.println("Enter a username: ");
-        String username = scanner.nextLine();
+        String username = s.nextLine();
 
-        // Check if the username is already taken
         for (int i = 0; i < customerCount; i++) {
             if (usernames[i].equals(username)) {
                 System.out.println("Username already taken. Try a different one.");
@@ -707,9 +697,8 @@ class Customer
         }
 
         System.out.println("Enter a password: ");
-        String password = scanner.nextLine();
+        String password = s.nextLine();
 
-        // Save the new user
         addCustomer(customerCount, name, username, password);
         customerCount++;
         System.out.println("Account created successfully!");
@@ -717,18 +706,76 @@ class Customer
 
     static void login() {
         System.out.println("Enter username: ");
-        String username = scanner.nextLine();
+        String username = s.nextLine();
 
         System.out.println("Enter password: ");
-        String password = scanner.nextLine();
+        String password = s.nextLine();
 
         for (int i = 0; i < customerCount; i++) {
             if (usernames[i].equals(username) && passwords[i].equals(password)) {
-                System.out.println("Login successful! Welcome, " + username);
+                System.out.println("Login successful! Welcome, " + names[i]);
+
+                // Ask if the user wants to manage the account after logging in
+                System.out.println("Do you want to manage your account? (yes/no)");
+                String checkForManagement = s.nextLine();
+
+                if (checkForManagement.equalsIgnoreCase("yes")) {
+                    manageAccount(i); // Only pass the logged-in user index to manage their account
+                }
                 return;
             }
         }
 
         System.out.println("Invalid username or password. Try again.");
+    }
+
+    static void manageAccount(int index) {
+        while (true) {
+            System.out.println("\nAccount Management:");
+            System.out.println("1. Reset Password");
+            System.out.println("2. Delete Account");
+            System.out.println("3. Logout");
+
+            int choice = s.nextInt();
+            s.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    resetPassword(index);  // Only available after login
+                    break;
+                case 2:
+                    deleteAccount(index);  // Only available after login
+                    return; // Return after deleting the account (ends the program)
+                case 3:
+                    System.out.println("Logged out successfully!");
+                    return; // Return to the main menu
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+
+    static void resetPassword(int index) {
+        System.out.println("Enter new password: ");
+        passwords[index] = s.nextLine();
+        System.out.println("Password reset successfully!");
+    }
+
+    static void deleteAccount(int index) {
+        System.out.println("Are you sure you want to delete your account? (yes/no)");
+        String confirmation = s.nextLine();
+        if (!confirmation.equalsIgnoreCase("yes")) {
+            System.out.println("Account deletion cancelled.");
+            return;
+        }
+
+        // Shift elements to delete the customer from the array
+        for (int i = index; i < customerCount - 1; i++) {
+            names[i] = names[i + 1];
+            usernames[i] = usernames[i + 1];
+            passwords[i] = passwords[i + 1];
+        }
+        customerCount--;  // Decrease the customer count after deletion
+        System.out.println("Account deleted successfully!");
     }
 }
