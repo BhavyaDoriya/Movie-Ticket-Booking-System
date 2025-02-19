@@ -1,6 +1,7 @@
 //Changes :
 //Quality of Movie , Final Bill in Square Boxe , If ticket is booked then print "Thanks for Bookng Ticket , Visit Again"
 //Otherwise,Thanks for Visiting ... , Available Seats 
+//Add comments
 import java.util.Scanner;
 
 class Movies {
@@ -751,13 +752,11 @@ class Customer {
         System.out.println("Select Seat Category:(Enter-->1-->Silver,2-->Gold,3-->Platinum) ");
         int seatCategory=Main.scanner.nextInt();
         seatCategory--;
-        boolean check1=true;
 
         for(;;)
         {
             if(seatCategory>=0&&seatCategory<=2)
             {
-                check=false;
                 break;
             }
             else
@@ -797,6 +796,38 @@ class Customer {
                 break;
             }
         }
+        System.out.println("Customer Name : "+this.customer_name);
+        System.out.println("Customer ID : "+this.user_name);
+        System.out.println("Theatre name :"+Theatre.TheatreList[choosenTheatreIndex].name);
+        System.out.println("Theatre Location :"+Theatre.TheatreList[choosenMovieIndex].location);
+        System.out.println("Movie Name : "+Theatre.TheatreList[choosenMovieIndex].availableMovies[choosenMovieIndex]);
+        System.out.print("Seat : ");
+        if(seatCategory==0)
+        {
+            System.out.println("Silver");
+        }
+        else if(seatCategory==1)
+        {
+            System.out.println("Gold");
+        }
+        else 
+        {
+            System.out.println("Platinum");
+        }
+        System.out.print("Show time: ");
+        if(timeCategory==0)
+        {
+            System.out.println("Morning");
+        }
+        else if(timeCategory==1)
+        {
+            System.out.println("Afternoon");
+        }
+        else 
+        {
+            System.out.println("Night");
+        }
+        System.out.println("Quantity : "+quantity);
         calculateTotalBill(basePrice_local, seatCategory, timeCategory, quantity);
 
     }
@@ -832,14 +863,14 @@ class Developer {
     static void developerAction()
     {
         System.out.println("Enter your admin password :");
-        String tryPass=s.nextLine();
+        String tryPass=Main.scanner.nextLine();
         if(tryPass.equals(developer_password))
         {
             System.out.println("What would you like to do ?");
             System.out.println("Enter 1 to Add a Movie");
             System.out.println("Enter 2 to Delete a Movie");
             System.out.println("Enter 3 to for logging out and going back to Home page");
-            int choice=s.nextInt();
+            int choice=Main.scanner.nextInt();
             switch(choice)
             {
                 case 1:
@@ -956,7 +987,7 @@ class Developer {
 
             }
         }
-                boolean check2=false;
+                
                 System.out.println("Enter the name of theatres you would like to add this movie to: ");
                 System.out.println("Available Theatres: ");
                 for(int i=0;i<Theatre.index;i++)
@@ -1133,7 +1164,7 @@ class Theatre
     String availableMovies[]=new String[30];
     double basePrice[]=new double[30];
     static double timeFactor[]=new double[]{0.8,1,1.2};
-    static double seatFactor[]=new double[]{1,1,5,2};
+    static double seatFactor[]=new double[]{1,1.5,2};
 
     int movieIndex=0;
 
