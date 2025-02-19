@@ -1,3 +1,6 @@
+//Changes :
+//Quality of Movie , Final Bill in Square Boxe , If ticket is booked then print "Thanks for Bookng Ticket , Visit Again"
+//Otherwise,Thanks for Visiting ... , Available Seats 
 import java.util.Scanner;
 
 class Movies {
@@ -6,8 +9,6 @@ class Movies {
     static String existingGenre[] = new String[] { "Comedy", "Action", "Slice of Life", "Horror", "Science Fiction",
             "Romance",
             "Animated" };
-    int price[] = new int[3];
-    Scanner s = new Scanner(System.in);
     static boolean checkMovieExist(String name)
     { 
          boolean check=false;
@@ -70,7 +71,6 @@ class Movies {
 class ComedyMovies extends Movies {
 
     static int index = 0;
-    int objectIndex;
     static ComedyMovies ComedyMovieslist[] = new ComedyMovies[50];
 
     ComedyMovies() {
@@ -109,7 +109,7 @@ class ComedyMovies extends Movies {
 
    static void print() {
         for (int i = 0; i < ComedyMovies.index; i++) {
-            System.out.println("*" + ComedyMovieslist[i].name);
+            System.out.println("* " + ComedyMovieslist[i].name);
 
         }
     }
@@ -119,7 +119,6 @@ class ComedyMovies extends Movies {
 class ActionMovies extends Movies {
 
     static int index = 0;
-    int objectIndex;
     static ActionMovies ActionMovieslist[] = new ActionMovies[50];
 
     ActionMovies() {
@@ -155,7 +154,7 @@ class ActionMovies extends Movies {
     }
     static void print() {
         for (int i = 0; i < ActionMovies.index; i++) {
-            System.out.println("*" + ActionMovieslist[i].name);
+            System.out.println("* " + ActionMovieslist[i].name);
 
         }
     }
@@ -163,7 +162,6 @@ class ActionMovies extends Movies {
 
 class SliceOfLifeMovies extends Movies {
     static int index = 0;
-    int objectIndex;
     static SliceOfLifeMovies SliceOfLifeMovieslist[] = new SliceOfLifeMovies[50];
 
     SliceOfLifeMovies() {
@@ -202,7 +200,7 @@ class SliceOfLifeMovies extends Movies {
     }
     static void print() {
         for (int i = 0; i < SliceOfLifeMovies.index; i++) {
-            System.out.println("*" + SliceOfLifeMovieslist[i].name);
+            System.out.println("* " + SliceOfLifeMovieslist[i].name);
 
         }
     }
@@ -211,7 +209,6 @@ class SliceOfLifeMovies extends Movies {
 
 class HorrorMovies extends Movies {
     static int index = 0;
-    int objectIndex;
     static HorrorMovies HorrorMovieslist[] = new HorrorMovies[50];
 
     HorrorMovies() {
@@ -246,7 +243,7 @@ class HorrorMovies extends Movies {
 
     static void print() {
         for (int i = 0; i < HorrorMovies.index; i++) {
-            System.out.println("*" + HorrorMovieslist[i].name);
+            System.out.println("* " + HorrorMovieslist[i].name);
 
         }
     }
@@ -255,7 +252,6 @@ class HorrorMovies extends Movies {
 class ScienceFictionMovies extends Movies {
 
     static int index = 0;
-    int objectIndex;
     static ScienceFictionMovies ScienceFictionMovieslist[] = new ScienceFictionMovies[50];
 
     ScienceFictionMovies() {
@@ -304,7 +300,7 @@ class ScienceFictionMovies extends Movies {
 
     static void print() {
         for (int i = 0; i < ScienceFictionMovies.index; i++) {
-            System.out.println("*" + ScienceFictionMovieslist[i].name);
+            System.out.println("* " + ScienceFictionMovieslist[i].name);
 
         }
     }
@@ -313,7 +309,6 @@ class ScienceFictionMovies extends Movies {
 class RomanceMovies extends Movies {
 
     static int index = 0;
-    int objectIndex;
     static RomanceMovies RomanceMovieslist[] = new RomanceMovies[50];
 
     RomanceMovies() {
@@ -365,7 +360,7 @@ class RomanceMovies extends Movies {
 
     static void print() {
         for (int i = 0; i < RomanceMovies.index; i++) {
-            System.out.println("*" + RomanceMovieslist[i].name);
+            System.out.println("* " + RomanceMovieslist[i].name);
 
         }
     }
@@ -374,7 +369,6 @@ class RomanceMovies extends Movies {
 class AnimatedMovies extends Movies {
 
     static int index = 0;
-    int objectIndex;
     static AnimatedMovies AnimatedMovieslist[] = new AnimatedMovies[50];
 
     AnimatedMovies() {
@@ -435,7 +429,7 @@ class AnimatedMovies extends Movies {
 
     static void print() {
         for (int i = 0; i < AnimatedMovies.index; i++) {
-            System.out.println("*" + AnimatedMovieslist[i].name);
+            System.out.println("* " + AnimatedMovieslist[i].name);
 
         }
     }
@@ -443,7 +437,6 @@ class AnimatedMovies extends Movies {
 
 class Customer {
     static int customerCount = 0; // Number of existing customers
-    static Scanner scanner = new Scanner(System.in);
     static Customer customerList[]=new Customer[20];
     String customer_name;
     String user_name;
@@ -451,7 +444,8 @@ class Customer {
     static int current_customer_index;
     double total_bill;
     int choosenTheatreIndex=0;
-        int choosenMovieIndex=0;
+    int choosenMovieIndex=0;
+
     Customer(String customer_name,String user_name,String pass)
     {
         this.customer_name=customer_name;
@@ -469,10 +463,10 @@ class Customer {
             return;
         }
         System.out.println("Enter your name: ");
-        String name = scanner.nextLine();
+        String name = Main.scanner.nextLine();
 
         System.out.println("Enter a username: ");
-        String username = scanner.nextLine();
+        String username = Main.scanner.nextLine();
 
         // Check if the username is already taken
         for (int i = 0; i < customerCount; i++) {
@@ -483,7 +477,7 @@ class Customer {
         }
 
         System.out.println("Enter a password: ");
-        String password = scanner.nextLine();
+        String password = Main.scanner.nextLine();
 
         // Save the new user
         customerList[customerCount]=new Customer(name, username, password);
@@ -493,12 +487,14 @@ class Customer {
     }
 
     static void login() {
+
         System.out.println("Enter username: ");
-        String username = scanner.nextLine();
+        String username = Main.scanner.nextLine();
 
         System.out.println("Enter password: ");
         boolean check=true;
-        String password = scanner.nextLine();
+        String password = Main.scanner.nextLine();
+        boolean check2=true;
         for(;;)
         {
             for (int i = 0; i < customerCount; i++) {
@@ -511,16 +507,18 @@ class Customer {
             }
             if(check)
             {
-                System.out.println("Re-enter correct login details or press Q to exit: ");
-                username=scanner.nextLine();
+                System.out.println("Re-enter correct login details!: ");
+                System.out.println("Enter your username or press Q to exit");
+                username=Main.scanner.nextLine();
                 if(username.equals("Q"))
                 {
+                    check2=false;
                     break;
                 }
                 else
                 {
                     System.out.println("Enter your password:");
-                    password=scanner.nextLine();
+                    password=Main.scanner.nextLine();
                 }
             }
             else
@@ -528,55 +526,83 @@ class Customer {
                 break;
             }
         }
+        if(check2)
+        {
         customerActionAfterLogin();
-        return;
+        
+        }
+        else
+        {
+            return;
+        }
 
     }
     static void customerAction()
     {
         
-        System.out.println("Enter 1. Create account");
-        System.out.println("Enter 2 Login account");
-        System.out.println("Enter 3 for Home page");
-        int choice=scanner.nextInt();
-        scanner.nextLine();
+        System.out.println("Enter 1 to Create account");
+        System.out.println("Enter 2 to Login account");
+        System.out.println("Enter 3 to return to the Home page");
+        int choice=Main.scanner.nextInt();
+        Main.scanner.nextLine();
         switch(choice)
         {
             case 1:
             createAccount();
             customerAction();
             break;
+
             case 2:
             login();
             customerAction();
             break;
+
             case 3:
             System.out.println("Returning to HomePage");
             Main.HomePage();
             break;
+
+            default:
+            System.out.println("Enter Valid Option:");
+            customerAction();
         }
     }
+
     static void customerActionAfterLogin()
     {
         System.out.println("What would you like to do?");
-        System.out.println("Enter 1 to see list of all movies (sorted by genre):");
-        System.out.println("Enter 2 to logout:");
-        int choice=scanner.nextInt();
+        System.out.println("Enter 1 to see list of All Movies (sorted by genre):");
+        System.out.println("Enter 2 to see list of Comedy Movies :");
+        System.out.println("Enter 3 to see list of Slice Of Life Movies :");
+        System.out.println("Enter 4 to see list of Romance Movies :");
+        System.out.println("Enter 5 to see list of Science Fiction Movies :");
+        System.out.println("Enter 6 to see list of Animated Movies :");
+        System.out.println("Enter 7 to see list of Horror Movies :");
+        System.out.println("Enter 8 to see list of Action Movies :");
+        System.out.println("Enter 9 to logout:");
+        int choice=Main.scanner.nextInt();
         switch(choice)
         {
             case 1:
+			System.out.println();
             System.out.println("*****Comedy Movies:***** ");
             ComedyMovies.print();
+			System.out.println();
             System.out.println("*****Slice of Life Movies:*****");
             SliceOfLifeMovies.print();
+			System.out.println();
             System.out.println("*****Romance Movies*****");
             RomanceMovies.print();
+			System.out.println();
             System.out.println("*****Science Fiction Movies*****");
             ScienceFictionMovies.print();
+			System.out.println();
             System.out.println("*****Animated Movies:*****");
             AnimatedMovies.print();
+			System.out.println();
             System.out.println("*****Horror Movies*****");
             HorrorMovies.print();
+			System.out.println();
             System.out.println("*****Action Movies*****");
             ActionMovies.print();
             System.out.println("");
@@ -585,24 +611,77 @@ class Customer {
             customerList[current_customer_index].bookYourMovie();
             customerActionAfterLogin();
             break;
+
             case 2:
+            System.out.println("*****Comedy Movies:***** ");
+            ComedyMovies.print();
+			customerList[current_customer_index].bookYourMovie();
+            customerActionAfterLogin();
+            break;
+			
+            case 3:
+            System.out.println("*****Slice of Life Movies:*****");
+            SliceOfLifeMovies.print();
+			customerList[current_customer_index].bookYourMovie();
+            customerActionAfterLogin();
+			break;
+			
+            case 4:
+            System.out.println("*****Romance Movies*****");
+            RomanceMovies.print();
+			customerList[current_customer_index].bookYourMovie();
+            customerActionAfterLogin();
+            break;
+			
+            case 5:
+            System.out.println("*****Science Fiction Movies*****");
+            ScienceFictionMovies.print();
+			customerList[current_customer_index].bookYourMovie();
+            customerActionAfterLogin();
+			break;
+			
+            case 6:
+            System.out.println("*****Animated Movies:*****");
+            AnimatedMovies.print();
+			customerList[current_customer_index].bookYourMovie();
+            customerActionAfterLogin();
+			break;
+			
+            case 7:
+            System.out.println("*****Horror Movies*****");
+            HorrorMovies.print();
+			customerList[current_customer_index].bookYourMovie();
+            customerActionAfterLogin();
+			break;
+			
+            case 8:
+            System.out.println("*****Action Movies*****");
+            ActionMovies.print();
+			customerList[current_customer_index].bookYourMovie();
+            customerActionAfterLogin();
+			break;
+			
+            case 9:
             System.out.println("log out succesful");
             System.out.println("Back to Customer Page");
             return;
             
+			default:
+			System.out.println("Enter Valid Option !");
+			customerActionAfterLogin();
         }
     }
+
     void bookYourMovie()
     {
         
         System.out.println("Enter the name of the movie you want to buy tickets for/Press Q to exit.");
-        String nameofBooking="";
+        String nameofBooking=Main.scanner.nextLine();
         for(;;)
         {
-            nameofBooking=scanner.nextLine();
+            nameofBooking=Main.scanner.nextLine();
             if(Movies.checkMovieExist(nameofBooking))
             {
-
                 break;
             }
             else if(nameofBooking.equals("Q"))
@@ -611,7 +690,7 @@ class Customer {
             }
             else 
             {
-                System.out.println("Invalid name,Re enter Movie name or press Q to exit");
+                System.out.println("Invalid Action,Re Enter Movie Name or Press Q to Exit");
             }
         }
         System.out.println("Available Theatres for the movie *"+nameofBooking+"*");
@@ -622,12 +701,12 @@ class Customer {
                 if(Theatre.TheatreList[i].availableMovies[j].equals(nameofBooking))
                 {
                     this.choosenMovieIndex=j;
-                    System.out.println("* "+Theatre.TheatreList[i].name);
+                    System.out.println("* "+Theatre.TheatreList[i].name+" , "+Theatre.TheatreList[i].location);
                 }
             }
         }
         System.out.println("Enter the name of theatre you want to book ticket in : ");
-        String nameOfTheatre=scanner.nextLine();
+        String nameOfTheatre=Main.scanner.nextLine();
         boolean check=false;
         
         for(;;)
@@ -644,15 +723,16 @@ class Customer {
             if(check==false)
             {
                 System.out.println("Invalid Theatre Name. Re enter theatre name.");
-                nameOfTheatre=scanner.nextLine();
+                nameOfTheatre=Main.scanner.nextLine();
             }
             else
             {
                 break;
             }
         }
+
         double basePrice_local=Theatre.TheatreList[this.choosenTheatreIndex].basePrice[this.choosenMovieIndex];
-        System.out.println("Pricing for your movie in the theatre you selected is : ");
+        System.out.println("Pricing For Your Movie In The Selected Theatre :");
         System.out.println("Seat: Silver");
         System.out.println("Timings:");
         System.out.println("Morning : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[0]*Theatre.seatFactor[0]));
@@ -669,9 +749,10 @@ class Customer {
         System.out.println("Afternoon : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[1]*Theatre.seatFactor[2]));
         System.out.println("Night : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[2]*Theatre.seatFactor[2]));
         System.out.println("Select Seat Category:(Enter-->1-->Silver,2-->Gold,3-->Platinum) ");
-        int seatCategory=scanner.nextInt();
+        int seatCategory=Main.scanner.nextInt();
         seatCategory--;
         boolean check1=true;
+
         for(;;)
         {
             if(seatCategory>=0&&seatCategory<=2)
@@ -682,12 +763,12 @@ class Customer {
             else
             {
                 System.out.println("Enter valid seat category(1-3)");
-                seatCategory=scanner.nextInt();
+                seatCategory=Main.scanner.nextInt();
                 seatCategory--;
             }
         }
         System.out.println("Enter timings for your show:--> 1-->Morning,2-->Afternoon,3-->Night");
-        int timeCategory=scanner.nextInt();
+        int timeCategory=Main.scanner.nextInt();
         timeCategory--;
         for(;;)
         {
@@ -698,19 +779,19 @@ class Customer {
             else
             {
                 System.out.println("Reneter Enter valid timings.");
-                timeCategory=scanner.nextInt();
+                timeCategory=Main.scanner.nextInt();
                 timeCategory--;
             }
         }
         System.out.println("Enter the Quantity for tickets: ");
-        int quantity=scanner.nextInt();
+        int quantity=Main.scanner.nextInt();
         for(;;)
         {
             if(quantity<=0)
             {
                 System.out.println("Quanity should atleast be 1.");
                 System.out.println("Re-Enter Quantity");
-                quantity=scanner.nextInt();
+                quantity=Main.scanner.nextInt();
             }
             else{
                 break;
@@ -743,23 +824,20 @@ class Customer {
                 }
             }
             return price;
-           
-    
     }
 }
 
 class Developer {
-    static Scanner s = new Scanner(System.in);
     static String developer_password="@integration09";
     static void developerAction()
     {
-        System.out.println("Enter your admin password");
+        System.out.println("Enter your admin password :");
         String tryPass=s.nextLine();
         if(tryPass.equals(developer_password))
         {
-            System.out.println("What would you like to do?");
-            System.out.println("Enter 1 to add a Movie");
-            System.out.println("Enter 2 to delete a Movie");
+            System.out.println("What would you like to do ?");
+            System.out.println("Enter 1 to Add a Movie");
+            System.out.println("Enter 2 to Delete a Movie");
             System.out.println("Enter 3 to for logging out and going back to Home page");
             int choice=s.nextInt();
             switch(choice)
@@ -793,7 +871,7 @@ class Developer {
     static void addMovies() {
         boolean check = false;
         System.out.println("How many Genre does your movie have?(1-7)//Press 8 to exit.");
-        int NumOfGenre = s.nextInt();
+        int NumOfGenre = Main.scanner.nextInt();
         do {
             if(NumOfGenre==8)
             {
@@ -803,7 +881,7 @@ class Developer {
                 check = false;
             } else {
                 System.out.println("Enter valid Number of Genre(1-7)/Press '8' to exit ");
-                NumOfGenre = s.nextInt();
+                NumOfGenre = Main.scanner.nextInt();
                 check = true;
             }
         } while (check);
@@ -818,7 +896,7 @@ class Developer {
         System.out.println("Enter Genres of Movies(In the above format)://Press Q to exit.");
         for (int i = 0; i < NumOfGenre; i++) {
             for (;;) {
-                GenreofMovie[i] = s.nextLine();
+                GenreofMovie[i] = Main.scanner.nextLine();
                 if(GenreofMovie[i].equals("Q"))
                 {
                     return;
@@ -837,7 +915,7 @@ class Developer {
             }
         }
         System.out.println("Enter the name of movie you want to add/Press Q to exit:");
-        String name = s.nextLine();
+        String name = Main.scanner.nextLine();
         if(name.equals("Q"))
         {
             return;
@@ -871,7 +949,6 @@ class Developer {
                     RomanceMovies.index++;
                     break;
                 case "Animated":
-                    AnimatedMovies o6 = new AnimatedMovies();
                     AnimatedMovies.AnimatedMovieslist[AnimatedMovies.index] = new AnimatedMovies(name, GenreofMovie);
                     AnimatedMovies.index++;
 
@@ -888,7 +965,7 @@ class Developer {
                 }
                 for(;;)
                 {   
-                    String theatre_name=s.nextLine();
+                    String theatre_name=Main.scanner.nextLine();
                     for(int i=0;i<Theatre.index;i++)
                     {
                         if(Theatre.TheatreList[i].name.equals(theatre_name))
@@ -904,12 +981,12 @@ class Developer {
                     {
                         System.out.println("Invalid Theatre Name");
                         System.out.println("Re-enter Theatre Name or press Q to exit.");
-                        theatre_name=s.nextLine();
+                        theatre_name=Main.scanner.nextLine();
                     }
                     else
                     {
                         System.out.println("Enter another Theatre in which you would like to add this movie to or Press Q to exit: ");
-                        theatre_name=s.nextLine();
+                        theatre_name=Main.scanner.nextLine();
                     }
                     if(theatre_name.equals("Q"))
                     {
@@ -918,14 +995,11 @@ class Developer {
                         break;
                     }
                 }
-                
-                
-
     }
 
     static void deleteMovies() {
         System.out.println("Enter the name of Movie you want to delete or press Q to exit");
-        String name = s.nextLine();
+        String name = Main.scanner.nextLine();
         boolean check = true;
         for (; check;) {
             if(name.equals("Q"))
@@ -1021,7 +1095,7 @@ class Developer {
             if (check) {
                 System.out.println("Invalid Name: ");
                 System.out.println("Re-enter the name of movie or press 'Q' to exit:");
-                name = s.nextLine();
+                name = Main.scanner.nextLine();
                 
             } else {
                 break;
@@ -1048,8 +1122,8 @@ class Developer {
             }
         }
     }
-
 }
+
 class Theatre 
 {
     static Theatre TheatreList[]=new Theatre[20];
@@ -1102,6 +1176,7 @@ class Theatre
         TheatreList[index].basePrice[TheatreList[index].movieIndex]=135;
         TheatreList[index].movieIndex++;
         index++;
+
         TheatreList[index]=new Theatre();
         TheatreList[index].name="City Gold";
         TheatreList[index].location="Ashram Road,Ahmedabad";
@@ -1135,8 +1210,8 @@ class Theatre
         TheatreList[index].availableMovies[TheatreList[index].movieIndex]="Flavors Of Youth";
         TheatreList[index].basePrice[TheatreList[index].movieIndex]=103;
         TheatreList[index].movieIndex++;
-
         index++;
+
         TheatreList[index]=new Theatre();
         TheatreList[index].name="Devi Multiplex";
         TheatreList[index].location="Naroda,Ahmedabad";
@@ -1185,8 +1260,8 @@ class Theatre
         TheatreList[index].availableMovies[TheatreList[index].movieIndex]="Rockstar";
         TheatreList[index].basePrice[TheatreList[index].movieIndex]=98;
         TheatreList[index].movieIndex++;
-
         index++;
+
         TheatreList[index]=new Theatre();
         TheatreList[index].name="SB multiplex";
         TheatreList[index].location="Agora mall,Ahmedabad";
@@ -1217,12 +1292,8 @@ class Theatre
         TheatreList[index].availableMovies[TheatreList[index].movieIndex]="October";
         TheatreList[index].basePrice[TheatreList[index].movieIndex]=136;
         TheatreList[index].movieIndex++;
-
-
-
-
-
         index++;
+        
         TheatreList[index]=new Theatre();
         TheatreList[index].name="Apple Multiplex";
         TheatreList[index].location="Maninagar,Ahmedabad";
@@ -1250,11 +1321,8 @@ class Theatre
         TheatreList[index].availableMovies[TheatreList[index].movieIndex]="Tumbbad";
         TheatreList[index].basePrice[TheatreList[index].movieIndex]=155;
         TheatreList[index].movieIndex++;
-
-
-
-
         index++;
+
         TheatreList[index]=new Theatre();
         TheatreList[index].name="Mango Plus Cinemas";
         TheatreList[index].location="Nikol,Ahmedabad";
@@ -1273,9 +1341,8 @@ class Theatre
         TheatreList[index].availableMovies[TheatreList[index].movieIndex]="Return Of Hanuman";
         TheatreList[index].basePrice[TheatreList[index].movieIndex]=280;
         TheatreList[index].movieIndex++;
-
-
         index++;
+
         TheatreList[index]=new Theatre();
         TheatreList[index].name="P Square MoviePlex";
         TheatreList[index].location="Gota,Ahmedabad";
@@ -1296,21 +1363,20 @@ class Theatre
         TheatreList[index].movieIndex++;
         TheatreList[index].availableMovies[TheatreList[index].movieIndex]="Blade Runner 2049";
         TheatreList[index].basePrice[TheatreList[index].movieIndex]=103;
-
         index++;
+
     }
-   
-    
 }
 
 class Main {
-   static Scanner s=new Scanner(System.in);
+   static Scanner scanner=new Scanner(System.in);
     static void HomePage()
     {
         System.out.println("Enter 1 for Developer");
         System.out.println("Enter 2 for Customer");
-        System.out.println("Enter 3 To terminate programme.");
-        int choice=s.nextInt();
+        System.out.println("Enter 3 To Terminate programme");
+        int choice=scanner.nextInt();
+		
         switch(choice)
         {
             case 1:
