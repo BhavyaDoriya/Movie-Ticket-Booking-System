@@ -15,6 +15,7 @@ class Main {
          switch(choice)
          {
              case 1:
+             scanner.nextLine();
              Developer.developerAction();
              break;
              case 2:
@@ -185,6 +186,9 @@ class Main {
                         if(Theatre.TheatreList[i].name.equals(theatre_name))
                         {
                             Theatre.TheatreList[i].availableMovies[Theatre.TheatreList[i].movieIndex]=name;
+                            
+                            System.out.println("Enter the Base price for the Movie for selected theatre");
+                            Theatre.TheatreList[i].basePrice[Theatre.TheatreList[i].movieIndex]=Main.scanner.nextInt();
                             Theatre.TheatreList[i].movieIndex++;
                             System.out.println("Movie Successfully added to "+Theatre.TheatreList[i].name);
                             check=true;
@@ -201,6 +205,7 @@ class Main {
                     {
                         System.out.println("Enter another Theatre in which you would like to add this movie to or Press Q to exit: ");
                         theatre_name=Main.scanner.nextLine();
+                        
                     }
                     if(theatre_name.equals("Q"))
                     {
@@ -208,6 +213,7 @@ class Main {
                         developerAction();
                         break;
                     }
+                    
                 }
     }
 
