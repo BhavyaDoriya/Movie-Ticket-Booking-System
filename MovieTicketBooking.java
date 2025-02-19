@@ -3,6 +3,767 @@
 //Otherwise,Thanks for Visiting ... , Available Seats 
 //Add comments
 import java.util.Scanner;
+class Main {
+    static Scanner scanner=new Scanner(System.in);
+     static void HomePage()
+     {
+         System.out.println("Enter 1 for Developer");
+         System.out.println("Enter 2 for Customer");
+         System.out.println("Enter 3 To Terminate programme");
+         int choice=scanner.nextInt();
+         
+         switch(choice)
+         {
+             case 1:
+             Developer.developerAction();
+             break;
+             case 2:
+             Customer.customerAction();
+             break;
+             case 3:
+             System.out.println("Program terminated successfully");
+             break;
+             default:
+             System.out.println("Enter valid choice!");
+             HomePage();
+             break;
+         }
+     }
+     public static void main(String[] args) {
+         ComedyMovies.defaultMovies();
+         RomanceMovies.defaultMovies();
+         ActionMovies.defaultMovies();
+         SliceOfLifeMovies.defaultMovies();
+         HorrorMovies.defaultMovies();
+         AnimatedMovies.defaultMovies();
+         ScienceFictionMovies.defaultMovies();
+         Theatre.defaultTheatre();
+         HomePage();
+     }
+ }
+ class Developer {
+    static String developer_password="@integration09";
+    static void developerAction()
+    {
+        System.out.println("Enter your admin password :");
+        String tryPass=Main.scanner.nextLine();
+        if(tryPass.equals(developer_password))
+        {
+            System.out.println("What would you like to do ?");
+            System.out.println("Enter 1 to Add a Movie");
+            System.out.println("Enter 2 to Delete a Movie");
+            System.out.println("Enter 3 to for logging out and going back to Home page");
+            int choice=Main.scanner.nextInt();
+            switch(choice)
+            {
+                case 1:
+                addMovies();
+                developerAction();
+                break;
+                case 2:
+                deleteMovies();
+                developerAction();
+                break;
+                case 3:
+                System.out.println("Going Back to Home Page");
+                Main.HomePage();
+                break;
+                default:
+                System.out.println("Enter valid choice next time,Going back to home page by default");
+                Main.HomePage();
+                break;
+            }
+        }
+        else
+        {
+            System.out.println("Invalid Password!");
+            System.out.println("Try again!");
+            System.out.println("Back To Home Page");
+            Main.HomePage();
+        }
+    }
+    static void addMovies() {
+        boolean check = false;
+        System.out.println("How many Genre does your movie have?(1-7)//Press 8 to exit.");
+        int NumOfGenre = Main.scanner.nextInt();
+        do {
+            if(NumOfGenre==8)
+            {
+                return;
+            }
+            else if (NumOfGenre >= 1 && NumOfGenre <= 7) {
+                check = false;
+            } else {
+                System.out.println("Enter valid Number of Genre(1-7)/Press '8' to exit ");
+                NumOfGenre = Main.scanner.nextInt();
+                check = true;
+            }
+        } while (check);
+
+        String GenreofMovie[] = new String[NumOfGenre];
+
+        System.out.println("Available Genres:");
+        for (int i = 0; i < Movies.existingGenre.length; i++) {
+            System.out.println("*" + Movies.existingGenre[i]);
+        }
+        boolean check1 = false;
+        System.out.println("Enter Genres of Movies(In the above format)://Press Q to exit.");
+        for (int i = 0; i < NumOfGenre; i++) {
+            for (;;) {
+                GenreofMovie[i] = Main.scanner.nextLine();
+                if(GenreofMovie[i].equals("Q"))
+                {
+                    return;
+                }
+                for (int j = 0; j < Movies.existingGenre.length; j++) {
+                    if (GenreofMovie[i].equals(Movies.existingGenre[j])) {
+                        check1 = true;
+                        break;
+                    }
+                }
+                if (check1 == false) {
+                    System.out.println("Enter valid Genre or Press Q to exit.");
+                } else {
+                    break;
+                }
+            }
+        }
+        System.out.println("Enter the name of movie you want to add/Press Q to exit:");
+        String name = Main.scanner.nextLine();
+        if(name.equals("Q"))
+        {
+            return;
+        }
+        for (int i = 0; i < NumOfGenre; i++) {
+            switch (GenreofMovie[i]) {
+                case "Comedy":
+
+                    ComedyMovies.ComedyMovieslist[ComedyMovies.index] = new ComedyMovies(name, GenreofMovie);
+                    ComedyMovies.index++;
+                    break;
+                case "Action":
+
+                    ActionMovies.ActionMovieslist[ActionMovies.index] = new ActionMovies(name, GenreofMovie);
+                    ActionMovies.index++;
+                    break;
+                case "Slice of Life":
+                    SliceOfLifeMovies.SliceOfLifeMovieslist[SliceOfLifeMovies.index] = new SliceOfLifeMovies(name, GenreofMovie);
+                    SliceOfLifeMovies.index++;
+                    break;
+                case "Horror":
+                    HorrorMovies.HorrorMovieslist[HorrorMovies.index] = new HorrorMovies(name, GenreofMovie);
+                HorrorMovies.index++;
+                    break;
+                case "Science Fiction":
+                    ScienceFictionMovies.ScienceFictionMovieslist[ScienceFictionMovies.index] = new ScienceFictionMovies(name, GenreofMovie);
+                    ScienceFictionMovies.index++;
+                    break;
+                case "Romance":
+                    RomanceMovies.RomanceMovieslist[RomanceMovies.index] = new RomanceMovies(name, GenreofMovie);
+                    RomanceMovies.index++;
+                    break;
+                case "Animated":
+                    AnimatedMovies.AnimatedMovieslist[AnimatedMovies.index] = new AnimatedMovies(name, GenreofMovie);
+                    AnimatedMovies.index++;
+
+                    break;
+
+            }
+        }
+                
+                System.out.println("Enter the name of theatres you would like to add this movie to: ");
+                System.out.println("Available Theatres: ");
+                for(int i=0;i<Theatre.index;i++)
+                {
+                    System.out.println("* "+Theatre.TheatreList[i].name);
+                }
+                for(;;)
+                {   
+                    String theatre_name=Main.scanner.nextLine();
+                    for(int i=0;i<Theatre.index;i++)
+                    {
+                        if(Theatre.TheatreList[i].name.equals(theatre_name))
+                        {
+                            Theatre.TheatreList[i].availableMovies[Theatre.TheatreList[i].movieIndex]=name;
+                            Theatre.TheatreList[i].movieIndex++;
+                            System.out.println("Movie Successfully added to "+Theatre.TheatreList[i].name);
+                            check=true;
+                            break;
+                        }
+                    }
+                    if(check==false)
+                    {
+                        System.out.println("Invalid Theatre Name");
+                        System.out.println("Re-enter Theatre Name or press Q to exit.");
+                        theatre_name=Main.scanner.nextLine();
+                    }
+                    else
+                    {
+                        System.out.println("Enter another Theatre in which you would like to add this movie to or Press Q to exit: ");
+                        theatre_name=Main.scanner.nextLine();
+                    }
+                    if(theatre_name.equals("Q"))
+                    {
+                        System.out.println("Exited Add movie method succesfully");
+                        developerAction();
+                        break;
+                    }
+                }
+    }
+
+    static void deleteMovies() {
+        System.out.println("Enter the name of Movie you want to delete or press Q to exit");
+        String name = Main.scanner.nextLine();
+        boolean check = true;
+        for (; check;) {
+            if(name.equals("Q"))
+            {
+                return;
+            }
+            for (int i = 0; i < ComedyMovies.index; i++) {
+                if (name.equals(ComedyMovies.ComedyMovieslist[i].name)) {
+
+                    for (int j = i; j < ComedyMovies.index - 1; j++) {
+                        ComedyMovies.ComedyMovieslist[j] = ComedyMovies.ComedyMovieslist[j + 1];
+                    }
+                    ComedyMovies.ComedyMovieslist[ComedyMovies.index - 1] = null;
+                    ComedyMovies.index--;
+                    check = false;
+                    break;
+                }
+            }
+            for (int i = 0; i < ActionMovies.index; i++) {
+                if (name.equals(ActionMovies.ActionMovieslist[i].name)) {
+
+                    for (int j = i; j < ActionMovies.index - 1; j++) {
+                        ActionMovies.ActionMovieslist[j] = ActionMovies.ActionMovieslist[j + 1];
+                    }
+                    ActionMovies.ActionMovieslist[ActionMovies.index - 1] = null;
+                    ActionMovies.index--;
+                    check = false;
+                    break;
+                }
+            }
+            for (int i = 0; i < SliceOfLifeMovies.index; i++) {
+                if (name.equals(SliceOfLifeMovies.SliceOfLifeMovieslist[i].name)) {
+
+                    for (int j = i; j < SliceOfLifeMovies.index - 1; j++) {
+                        SliceOfLifeMovies.SliceOfLifeMovieslist[j] = SliceOfLifeMovies.SliceOfLifeMovieslist[j + 1];
+                    }
+                    SliceOfLifeMovies.SliceOfLifeMovieslist[SliceOfLifeMovies.index - 1] = null;
+                    SliceOfLifeMovies.index--;
+                    check = false;
+                    break;
+                }
+            }
+            for (int i = 0; i < HorrorMovies.index; i++) {
+                if (name.equals(HorrorMovies.HorrorMovieslist[i].name)) {
+
+                    for (int j = i; j < HorrorMovies.index - 1; j++) {
+                        HorrorMovies.HorrorMovieslist[j] = HorrorMovies.HorrorMovieslist[j + 1];
+                    }
+                    HorrorMovies.HorrorMovieslist[HorrorMovies.index - 1] = null;
+                    HorrorMovies.index--;
+                    check = false;
+                    break;
+                }
+            }
+            for (int i = 0; i < ScienceFictionMovies.index; i++) {
+                if (name.equals(ScienceFictionMovies.ScienceFictionMovieslist[i].name)) {
+
+                    for (int j = i; j < ScienceFictionMovies.index - 1; j++) {
+                        ScienceFictionMovies.ScienceFictionMovieslist[j] = ScienceFictionMovies.ScienceFictionMovieslist[j
+                                + 1];
+                    }
+                    ScienceFictionMovies.ScienceFictionMovieslist[ScienceFictionMovies.index - 1] = null;
+                    ScienceFictionMovies.index--;
+                    check = false;
+                    break;
+                }
+            }
+            for (int i = 0; i < RomanceMovies.index; i++) {
+                if (name.equals(RomanceMovies.RomanceMovieslist[i].name)) {
+
+                    for (int j = i; j < RomanceMovies.index - 1; j++) {
+                        RomanceMovies.RomanceMovieslist[j] = RomanceMovies.RomanceMovieslist[j + 1];
+                    }
+                    RomanceMovies.RomanceMovieslist[RomanceMovies.index - 1] = null;
+                    RomanceMovies.index--;
+                    check = false;
+                    break;
+                }
+            }
+            for (int i = 0; i < AnimatedMovies.index; i++) {
+                if (name.equals(AnimatedMovies.AnimatedMovieslist[i].name)) {
+
+                    for (int j = i; j < AnimatedMovies.index - 1; j++) {
+                        AnimatedMovies.AnimatedMovieslist[j] = AnimatedMovies.AnimatedMovieslist[j + 1];
+                    }
+                    AnimatedMovies.AnimatedMovieslist[AnimatedMovies.index - 1] = null;
+                    AnimatedMovies.index--;
+                    check = false;
+                    break;
+                }
+            }
+
+            if (check) {
+                System.out.println("Invalid Name: ");
+                System.out.println("Re-enter the name of movie or press 'Q' to exit:");
+                name = Main.scanner.nextLine();
+                
+            } else {
+                break;
+            }
+        }
+        //For deleting Movie from Theatre
+        for(int i=0;i<Theatre.index;i++)
+        {
+            if(name.equals("Q"))
+            {
+                break;
+            }
+            for(int j=0;j<Theatre.TheatreList[i].movieIndex;j++)
+            {
+                if(Theatre.TheatreList[i].availableMovies[j].equals(name))
+                {
+                    for(int k=j;k<Theatre.TheatreList[i].movieIndex-1;k++)
+                    {
+                        Theatre.TheatreList[i].availableMovies[k]=Theatre.TheatreList[i].availableMovies[k+1];
+                    }
+                        Theatre.TheatreList[i].availableMovies[Theatre.TheatreList[i].movieIndex-1]=null;
+                        Theatre.TheatreList[i].movieIndex--;
+                }
+            }
+        }
+    }
+}
+
+ class Customer {
+    static int customerCount = 0; // Number of existing customers
+    static Customer customerList[]=new Customer[20];
+    String customer_name;
+    String user_name;
+    String pass;
+    static int current_customer_index;
+    double total_bill;
+    int choosenTheatreIndex=0;
+    int choosenMovieIndex=0;
+
+    Customer(String customer_name,String user_name,String pass)
+    {
+        this.customer_name=customer_name;
+        this.user_name=user_name;
+        this.pass=pass;
+    }
+    
+
+    static void createAccount() {
+        
+        if(customerCount>=customerList.length)
+        {
+            System.out.println("Too Many Customers!");
+            System.out.println("Cannot store any more data. Customer can't create account.");
+            return;
+        }
+        System.out.println("Enter your name: ");
+        String name = Main.scanner.nextLine();
+
+        System.out.println("Enter a username: ");
+        String username = Main.scanner.nextLine();
+
+        // Check if the username is already taken
+        for (int i = 0; i < customerCount; i++) {
+            if (customerList[i].user_name.equals(username)) {
+                System.out.println("An account with this name already exists. Try logging in or enter different user name.");
+                return;
+            }
+        }
+
+        System.out.println("Enter a password: ");
+        String password = Main.scanner.nextLine();
+
+        // Save the new user
+        customerList[customerCount]=new Customer(name, username, password);
+        customerCount++;
+        System.out.println("Account created successfully!");
+        System.out.println("Returning to customer page.");
+    }
+
+    static void login() {
+
+        System.out.println("Enter username: ");
+        String username = Main.scanner.nextLine();
+
+        System.out.println("Enter password: ");
+        boolean check=true;
+        String password = Main.scanner.nextLine();
+        boolean check2=true;
+        for(;;)
+        {
+            for (int i = 0; i < customerCount; i++) {
+                if (customerList[i].user_name.equals(username) && customerList[i].pass.equals(password)) {
+                    System.out.println("Login successful! Welcome, " + username);
+                    current_customer_index=i;
+                    check=false;
+                    break;
+                }
+            }
+            if(check)
+            {
+                System.out.println("Re-enter correct login details!: ");
+                System.out.println("Enter your username or press Q to exit");
+                username=Main.scanner.nextLine();
+                if(username.equals("Q"))
+                {
+                    check2=false;
+                    break;
+                }
+                else
+                {
+                    System.out.println("Enter your password:");
+                    password=Main.scanner.nextLine();
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+        if(check2)
+        {
+        customerActionAfterLogin();
+        
+        }
+        else
+        {
+            return;
+        }
+
+    }
+    static void customerAction()
+    {
+        
+        System.out.println("Enter 1 to Create account");
+        System.out.println("Enter 2 to Login account");
+        System.out.println("Enter 3 to return to the Home page");
+        int choice=Main.scanner.nextInt();
+        Main.scanner.nextLine();
+        switch(choice)
+        {
+            case 1:
+            createAccount();
+            customerAction();
+            break;
+
+            case 2:
+            login();
+            customerAction();
+            break;
+
+            case 3:
+            System.out.println("Returning to HomePage");
+            Main.HomePage();
+            break;
+
+            default:
+            System.out.println("Enter Valid Option:");
+            customerAction();
+        }
+    }
+
+    static void customerActionAfterLogin()
+    {
+        System.out.println("What would you like to do?");
+        System.out.println("Enter 1 to see list of All Movies (sorted by genre):");
+        System.out.println("Enter 2 to see list of Comedy Movies :");
+        System.out.println("Enter 3 to see list of Slice Of Life Movies :");
+        System.out.println("Enter 4 to see list of Romance Movies :");
+        System.out.println("Enter 5 to see list of Science Fiction Movies :");
+        System.out.println("Enter 6 to see list of Animated Movies :");
+        System.out.println("Enter 7 to see list of Horror Movies :");
+        System.out.println("Enter 8 to see list of Action Movies :");
+        System.out.println("Enter 9 to logout:");
+        int choice=Main.scanner.nextInt();
+        switch(choice)
+        {
+            case 1:
+			System.out.println();
+            System.out.println("*****Comedy Movies:***** ");
+            ComedyMovies.print();
+			System.out.println();
+            System.out.println("*****Slice of Life Movies:*****");
+            SliceOfLifeMovies.print();
+			System.out.println();
+            System.out.println("*****Romance Movies*****");
+            RomanceMovies.print();
+			System.out.println();
+            System.out.println("*****Science Fiction Movies*****");
+            ScienceFictionMovies.print();
+			System.out.println();
+            System.out.println("*****Animated Movies:*****");
+            AnimatedMovies.print();
+			System.out.println();
+            System.out.println("*****Horror Movies*****");
+            HorrorMovies.print();
+			System.out.println();
+            System.out.println("*****Action Movies*****");
+            ActionMovies.print();
+            System.out.println("");
+            System.out.println("**************************************************");
+            System.out.println("");
+            customerList[current_customer_index].bookYourMovie();
+            customerActionAfterLogin();
+            break;
+
+            case 2:
+            System.out.println("*****Comedy Movies:***** ");
+            ComedyMovies.print();
+			customerList[current_customer_index].bookYourMovie();
+            customerActionAfterLogin();
+            break;
+			
+            case 3:
+            System.out.println("*****Slice of Life Movies:*****");
+            SliceOfLifeMovies.print();
+			customerList[current_customer_index].bookYourMovie();
+            customerActionAfterLogin();
+			break;
+			
+            case 4:
+            System.out.println("*****Romance Movies*****");
+            RomanceMovies.print();
+			customerList[current_customer_index].bookYourMovie();
+            customerActionAfterLogin();
+            break;
+			
+            case 5:
+            System.out.println("*****Science Fiction Movies*****");
+            ScienceFictionMovies.print();
+			customerList[current_customer_index].bookYourMovie();
+            customerActionAfterLogin();
+			break;
+			
+            case 6:
+            System.out.println("*****Animated Movies:*****");
+            AnimatedMovies.print();
+			customerList[current_customer_index].bookYourMovie();
+            customerActionAfterLogin();
+			break;
+			
+            case 7:
+            System.out.println("*****Horror Movies*****");
+            HorrorMovies.print();
+			customerList[current_customer_index].bookYourMovie();
+            customerActionAfterLogin();
+			break;
+			
+            case 8:
+            System.out.println("*****Action Movies*****");
+            ActionMovies.print();
+			customerList[current_customer_index].bookYourMovie();
+            customerActionAfterLogin();
+			break;
+			
+            case 9:
+            System.out.println("log out succesful");
+            System.out.println("Back to Customer Page");
+            return;
+            
+			default:
+			System.out.println("Enter Valid Option !");
+			customerActionAfterLogin();
+        }
+    }
+
+    void bookYourMovie()
+    {
+        
+        System.out.println("Enter the name of the movie you want to buy tickets for/Press Q to exit.");
+        String nameofBooking=Main.scanner.nextLine();
+        for(;;)
+        {
+            nameofBooking=Main.scanner.nextLine();
+            if(Movies.checkMovieExist(nameofBooking))
+            {
+                break;
+            }
+            else if(nameofBooking.equals("Q"))
+            {
+                return;
+            }
+            else 
+            {
+                System.out.println("Invalid Action,Re Enter Movie Name or Press Q to Exit");
+            }
+        }
+        System.out.println("Available Theatres for the movie *"+nameofBooking+"*");
+        for(int i=0;i<Theatre.index;i++)
+        {
+            for(int j=0;j<Theatre.TheatreList[i].movieIndex;j++)
+            {
+                if(Theatre.TheatreList[i].availableMovies[j].equals(nameofBooking))
+                {
+                    this.choosenMovieIndex=j;
+                    System.out.println("* "+Theatre.TheatreList[i].name);
+                    System.out.println("Location : "+Theatre.TheatreList[i].location);
+                }
+            }
+        }
+        System.out.println("Enter the name of theatre you want to book ticket in : ");
+        String nameOfTheatre=Main.scanner.nextLine();
+        boolean check=false;
+        
+        for(;;)
+        {
+            for(int i=0;i<Theatre.index;i++)
+            {
+                if(Theatre.TheatreList[i].name.equals(nameOfTheatre))
+                {
+                    this.choosenTheatreIndex=i;
+                    check=true;
+                    break;
+                }
+            }
+            if(check==false)
+            {
+                System.out.println("Invalid Theatre Name. Re enter theatre name.");
+                nameOfTheatre=Main.scanner.nextLine();
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        double basePrice_local=Theatre.TheatreList[this.choosenTheatreIndex].basePrice[this.choosenMovieIndex];
+        System.out.println("Pricing For Your Movie In The Selected Theatre :");
+        System.out.println("Seat: Silver");
+        System.out.println("Timings:");
+        System.out.println("Morning : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[0]*Theatre.seatFactor[0]));
+        System.out.println("Afternoon : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[1]*Theatre.seatFactor[0]));
+        System.out.println("Night : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[2]*Theatre.seatFactor[0]));
+        System.out.println("Seat: Gold");
+        System.out.println("Timings:");
+        System.out.println("Morning : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[0]*Theatre.seatFactor[1]));
+        System.out.println("Afternoon : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[1]*Theatre.seatFactor[1]));
+        System.out.println("Night : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[2]*Theatre.seatFactor[1]));
+        System.out.println("Seat: Platinum");
+        System.out.println("Timings:");
+        System.out.println("Morning : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[0]*Theatre.seatFactor[2]));
+        System.out.println("Afternoon : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[1]*Theatre.seatFactor[2]));
+        System.out.println("Night : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[2]*Theatre.seatFactor[2]));
+        System.out.println("Select Seat Category:(Enter-->1-->Silver,2-->Gold,3-->Platinum) ");
+        int seatCategory=Main.scanner.nextInt();
+        seatCategory--;
+
+        for(;;)
+        {
+            if(seatCategory>=0&&seatCategory<=2)
+            {
+                break;
+            }
+            else
+            {
+                System.out.println("Enter valid seat category(1-3)");
+                seatCategory=Main.scanner.nextInt();
+                seatCategory--;
+            }
+        }
+        System.out.println("Enter timings for your show:--> 1-->Morning,2-->Afternoon,3-->Night");
+        int timeCategory=Main.scanner.nextInt();
+        timeCategory--;
+        for(;;)
+        {
+            if(timeCategory>=0&&timeCategory<=2)
+            {
+                break;
+            }
+            else
+            {
+                System.out.println("Re-enter Enter valid timings.");
+                timeCategory=Main.scanner.nextInt();
+                timeCategory--;
+            }
+        }
+        System.out.println("Enter the Quantity for tickets: ");
+        int quantity=Main.scanner.nextInt();
+        for(;;)
+        {
+            if(quantity<=0)
+            {
+                System.out.println("Quanity should atleast be 1.");
+                System.out.println("Re-Enter Quantity");
+                quantity=Main.scanner.nextInt();
+            }
+            else{
+                break;
+            }
+        }
+        System.out.println("*****************************************************************");
+        System.out.println("Customer Name : "+this.customer_name);
+        System.out.println("Customer ID : "+this.user_name);
+        System.out.println("Theatre name :"+Theatre.TheatreList[choosenTheatreIndex].name);
+        System.out.println("Theatre Location :"+Theatre.TheatreList[choosenTheatreIndex].location);
+        System.out.println("Movie Name : "+Theatre.TheatreList[choosenTheatreIndex].availableMovies[choosenMovieIndex]);
+        System.out.print("Seat : ");
+        if(seatCategory==0)
+        {
+            System.out.println("Silver");
+        }
+        else if(seatCategory==1)
+        {
+            System.out.println("Gold");
+        }
+        else 
+        {
+            System.out.println("Platinum");
+        }
+        System.out.print("Show time: ");
+        if(timeCategory==0)
+        {
+            System.out.println("Morning");
+        }
+        else if(timeCategory==1)
+        {
+            System.out.println("Afternoon");
+        }
+        else 
+        {
+            System.out.println("Night");
+        }
+        System.out.println("Quantity : "+quantity);
+        calculateTotalBill(basePrice_local, seatCategory, timeCategory, quantity);
+
+    }
+
+    void calculateTotalBill(double basePrice,int seatCategory,int timeCategory,int quantity)
+    {
+        total_bill=basePrice*Theatre.timeFactor[timeCategory]*Theatre.seatFactor[seatCategory]*quantity;
+        System.out.println("Total Bill : "+total_bill);
+        System.out.println("Ticket booked successfully");
+        System.out.println("Thank you for visiting.");
+        System.out.println("*****************************************************************");
+    }
+    double calculatePrice(String nameOfTheatre,String nameOfBooking)
+    {
+            double price=0;
+            for(int i=0;i<Theatre.index;i++)
+            {
+                if(Theatre.TheatreList[i].name.equals(nameOfTheatre))
+                {
+                    for(int j=0;j<Theatre.TheatreList[i].movieIndex;j++)
+                    {
+                       if(Theatre.TheatreList[i].availableMovies[j].equals(nameOfBooking))
+                        {
+                            price=Theatre.TheatreList[i].basePrice[j];
+                        }
+                    }
+                    break;
+                }
+            }
+            return price;
+    }
+}
 
 class Movies {
     String name;
@@ -436,724 +1197,7 @@ class AnimatedMovies extends Movies {
     }
 }
 
-class Customer {
-    static int customerCount = 0; // Number of existing customers
-    static Customer customerList[]=new Customer[20];
-    String customer_name;
-    String user_name;
-    String pass;
-    static int current_customer_index;
-    double total_bill;
-    int choosenTheatreIndex=0;
-    int choosenMovieIndex=0;
 
-    Customer(String customer_name,String user_name,String pass)
-    {
-        this.customer_name=customer_name;
-        this.user_name=user_name;
-        this.pass=pass;
-    }
-    
-
-    static void createAccount() {
-        
-        if(customerCount>=customerList.length)
-        {
-            System.out.println("Too Many Customers!");
-            System.out.println("Cannot store any more data. Customer can't create account.");
-            return;
-        }
-        System.out.println("Enter your name: ");
-        String name = Main.scanner.nextLine();
-
-        System.out.println("Enter a username: ");
-        String username = Main.scanner.nextLine();
-
-        // Check if the username is already taken
-        for (int i = 0; i < customerCount; i++) {
-            if (customerList[i].user_name.equals(username)) {
-                System.out.println("An account with this name already exists. Try logging in or enter different user name.");
-                return;
-            }
-        }
-
-        System.out.println("Enter a password: ");
-        String password = Main.scanner.nextLine();
-
-        // Save the new user
-        customerList[customerCount]=new Customer(name, username, password);
-        customerCount++;
-        System.out.println("Account created successfully!");
-        System.out.println("Returning to customer page.");
-    }
-
-    static void login() {
-
-        System.out.println("Enter username: ");
-        String username = Main.scanner.nextLine();
-
-        System.out.println("Enter password: ");
-        boolean check=true;
-        String password = Main.scanner.nextLine();
-        boolean check2=true;
-        for(;;)
-        {
-            for (int i = 0; i < customerCount; i++) {
-                if (customerList[i].user_name.equals(username) && customerList[i].pass.equals(password)) {
-                    System.out.println("Login successful! Welcome, " + username);
-                    current_customer_index=i;
-                    check=false;
-                    break;
-                }
-            }
-            if(check)
-            {
-                System.out.println("Re-enter correct login details!: ");
-                System.out.println("Enter your username or press Q to exit");
-                username=Main.scanner.nextLine();
-                if(username.equals("Q"))
-                {
-                    check2=false;
-                    break;
-                }
-                else
-                {
-                    System.out.println("Enter your password:");
-                    password=Main.scanner.nextLine();
-                }
-            }
-            else
-            {
-                break;
-            }
-        }
-        if(check2)
-        {
-        customerActionAfterLogin();
-        
-        }
-        else
-        {
-            return;
-        }
-
-    }
-    static void customerAction()
-    {
-        
-        System.out.println("Enter 1 to Create account");
-        System.out.println("Enter 2 to Login account");
-        System.out.println("Enter 3 to return to the Home page");
-        int choice=Main.scanner.nextInt();
-        Main.scanner.nextLine();
-        switch(choice)
-        {
-            case 1:
-            createAccount();
-            customerAction();
-            break;
-
-            case 2:
-            login();
-            customerAction();
-            break;
-
-            case 3:
-            System.out.println("Returning to HomePage");
-            Main.HomePage();
-            break;
-
-            default:
-            System.out.println("Enter Valid Option:");
-            customerAction();
-        }
-    }
-
-    static void customerActionAfterLogin()
-    {
-        System.out.println("What would you like to do?");
-        System.out.println("Enter 1 to see list of All Movies (sorted by genre):");
-        System.out.println("Enter 2 to see list of Comedy Movies :");
-        System.out.println("Enter 3 to see list of Slice Of Life Movies :");
-        System.out.println("Enter 4 to see list of Romance Movies :");
-        System.out.println("Enter 5 to see list of Science Fiction Movies :");
-        System.out.println("Enter 6 to see list of Animated Movies :");
-        System.out.println("Enter 7 to see list of Horror Movies :");
-        System.out.println("Enter 8 to see list of Action Movies :");
-        System.out.println("Enter 9 to logout:");
-        int choice=Main.scanner.nextInt();
-        switch(choice)
-        {
-            case 1:
-			System.out.println();
-            System.out.println("*****Comedy Movies:***** ");
-            ComedyMovies.print();
-			System.out.println();
-            System.out.println("*****Slice of Life Movies:*****");
-            SliceOfLifeMovies.print();
-			System.out.println();
-            System.out.println("*****Romance Movies*****");
-            RomanceMovies.print();
-			System.out.println();
-            System.out.println("*****Science Fiction Movies*****");
-            ScienceFictionMovies.print();
-			System.out.println();
-            System.out.println("*****Animated Movies:*****");
-            AnimatedMovies.print();
-			System.out.println();
-            System.out.println("*****Horror Movies*****");
-            HorrorMovies.print();
-			System.out.println();
-            System.out.println("*****Action Movies*****");
-            ActionMovies.print();
-            System.out.println("");
-            System.out.println("**************************************************");
-            System.out.println("");
-            customerList[current_customer_index].bookYourMovie();
-            customerActionAfterLogin();
-            break;
-
-            case 2:
-            System.out.println("*****Comedy Movies:***** ");
-            ComedyMovies.print();
-			customerList[current_customer_index].bookYourMovie();
-            customerActionAfterLogin();
-            break;
-			
-            case 3:
-            System.out.println("*****Slice of Life Movies:*****");
-            SliceOfLifeMovies.print();
-			customerList[current_customer_index].bookYourMovie();
-            customerActionAfterLogin();
-			break;
-			
-            case 4:
-            System.out.println("*****Romance Movies*****");
-            RomanceMovies.print();
-			customerList[current_customer_index].bookYourMovie();
-            customerActionAfterLogin();
-            break;
-			
-            case 5:
-            System.out.println("*****Science Fiction Movies*****");
-            ScienceFictionMovies.print();
-			customerList[current_customer_index].bookYourMovie();
-            customerActionAfterLogin();
-			break;
-			
-            case 6:
-            System.out.println("*****Animated Movies:*****");
-            AnimatedMovies.print();
-			customerList[current_customer_index].bookYourMovie();
-            customerActionAfterLogin();
-			break;
-			
-            case 7:
-            System.out.println("*****Horror Movies*****");
-            HorrorMovies.print();
-			customerList[current_customer_index].bookYourMovie();
-            customerActionAfterLogin();
-			break;
-			
-            case 8:
-            System.out.println("*****Action Movies*****");
-            ActionMovies.print();
-			customerList[current_customer_index].bookYourMovie();
-            customerActionAfterLogin();
-			break;
-			
-            case 9:
-            System.out.println("log out succesful");
-            System.out.println("Back to Customer Page");
-            return;
-            
-			default:
-			System.out.println("Enter Valid Option !");
-			customerActionAfterLogin();
-        }
-    }
-
-    void bookYourMovie()
-    {
-        
-        System.out.println("Enter the name of the movie you want to buy tickets for/Press Q to exit.");
-        String nameofBooking=Main.scanner.nextLine();
-        for(;;)
-        {
-            nameofBooking=Main.scanner.nextLine();
-            if(Movies.checkMovieExist(nameofBooking))
-            {
-                break;
-            }
-            else if(nameofBooking.equals("Q"))
-            {
-                return;
-            }
-            else 
-            {
-                System.out.println("Invalid Action,Re Enter Movie Name or Press Q to Exit");
-            }
-        }
-        System.out.println("Available Theatres for the movie *"+nameofBooking+"*");
-        for(int i=0;i<Theatre.index;i++)
-        {
-            for(int j=0;j<Theatre.TheatreList[i].movieIndex;j++)
-            {
-                if(Theatre.TheatreList[i].availableMovies[j].equals(nameofBooking))
-                {
-                    this.choosenMovieIndex=j;
-                    System.out.println("* "+Theatre.TheatreList[i].name+" , "+Theatre.TheatreList[i].location);
-                }
-            }
-        }
-        System.out.println("Enter the name of theatre you want to book ticket in : ");
-        String nameOfTheatre=Main.scanner.nextLine();
-        boolean check=false;
-        
-        for(;;)
-        {
-            for(int i=0;i<Theatre.index;i++)
-            {
-                if(Theatre.TheatreList[i].name.equals(nameOfTheatre))
-                {
-                    this.choosenTheatreIndex=i;
-                    check=true;
-                    break;
-                }
-            }
-            if(check==false)
-            {
-                System.out.println("Invalid Theatre Name. Re enter theatre name.");
-                nameOfTheatre=Main.scanner.nextLine();
-            }
-            else
-            {
-                break;
-            }
-        }
-
-        double basePrice_local=Theatre.TheatreList[this.choosenTheatreIndex].basePrice[this.choosenMovieIndex];
-        System.out.println("Pricing For Your Movie In The Selected Theatre :");
-        System.out.println("Seat: Silver");
-        System.out.println("Timings:");
-        System.out.println("Morning : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[0]*Theatre.seatFactor[0]));
-        System.out.println("Afternoon : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[1]*Theatre.seatFactor[0]));
-        System.out.println("Night : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[2]*Theatre.seatFactor[0]));
-        System.out.println("Seat: Gold");
-        System.out.println("Timings:");
-        System.out.println("Morning : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[0]*Theatre.seatFactor[1]));
-        System.out.println("Afternoon : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[1]*Theatre.seatFactor[1]));
-        System.out.println("Night : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[2]*Theatre.seatFactor[1]));
-        System.out.println("Seat: Platinum");
-        System.out.println("Timings:");
-        System.out.println("Morning : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[0]*Theatre.seatFactor[2]));
-        System.out.println("Afternoon : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[1]*Theatre.seatFactor[2]));
-        System.out.println("Night : price--> "+(calculatePrice(nameOfTheatre, nameofBooking)*Theatre.timeFactor[2]*Theatre.seatFactor[2]));
-        System.out.println("Select Seat Category:(Enter-->1-->Silver,2-->Gold,3-->Platinum) ");
-        int seatCategory=Main.scanner.nextInt();
-        seatCategory--;
-
-        for(;;)
-        {
-            if(seatCategory>=0&&seatCategory<=2)
-            {
-                break;
-            }
-            else
-            {
-                System.out.println("Enter valid seat category(1-3)");
-                seatCategory=Main.scanner.nextInt();
-                seatCategory--;
-            }
-        }
-        System.out.println("Enter timings for your show:--> 1-->Morning,2-->Afternoon,3-->Night");
-        int timeCategory=Main.scanner.nextInt();
-        timeCategory--;
-        for(;;)
-        {
-            if(timeCategory>=0&&timeCategory<=2)
-            {
-                break;
-            }
-            else
-            {
-                System.out.println("Reneter Enter valid timings.");
-                timeCategory=Main.scanner.nextInt();
-                timeCategory--;
-            }
-        }
-        System.out.println("Enter the Quantity for tickets: ");
-        int quantity=Main.scanner.nextInt();
-        for(;;)
-        {
-            if(quantity<=0)
-            {
-                System.out.println("Quanity should atleast be 1.");
-                System.out.println("Re-Enter Quantity");
-                quantity=Main.scanner.nextInt();
-            }
-            else{
-                break;
-            }
-        }
-        System.out.println("Customer Name : "+this.customer_name);
-        System.out.println("Customer ID : "+this.user_name);
-        System.out.println("Theatre name :"+Theatre.TheatreList[choosenTheatreIndex].name);
-        System.out.println("Theatre Location :"+Theatre.TheatreList[choosenMovieIndex].location);
-        System.out.println("Movie Name : "+Theatre.TheatreList[choosenMovieIndex].availableMovies[choosenMovieIndex]);
-        System.out.print("Seat : ");
-        if(seatCategory==0)
-        {
-            System.out.println("Silver");
-        }
-        else if(seatCategory==1)
-        {
-            System.out.println("Gold");
-        }
-        else 
-        {
-            System.out.println("Platinum");
-        }
-        System.out.print("Show time: ");
-        if(timeCategory==0)
-        {
-            System.out.println("Morning");
-        }
-        else if(timeCategory==1)
-        {
-            System.out.println("Afternoon");
-        }
-        else 
-        {
-            System.out.println("Night");
-        }
-        System.out.println("Quantity : "+quantity);
-        calculateTotalBill(basePrice_local, seatCategory, timeCategory, quantity);
-
-    }
-
-    void calculateTotalBill(double basePrice,int seatCategory,int timeCategory,int quantity)
-    {
-        total_bill=basePrice*Theatre.timeFactor[timeCategory]*Theatre.seatFactor[seatCategory]*quantity;
-        System.out.println("Your total bill is : "+total_bill);
-    }
-    double calculatePrice(String nameOfTheatre,String nameOfBooking)
-    {
-            double price=0;
-            for(int i=0;i<Theatre.index;i++)
-            {
-                if(Theatre.TheatreList[i].name.equals(nameOfTheatre))
-                {
-                    for(int j=0;j<Theatre.TheatreList[i].movieIndex;j++)
-                    {
-                       if(Theatre.TheatreList[i].availableMovies[j].equals(nameOfBooking))
-                        {
-                            price=Theatre.TheatreList[i].basePrice[j];
-                        }
-                    }
-                    break;
-                }
-            }
-            return price;
-    }
-}
-
-class Developer {
-    static String developer_password="@integration09";
-    static void developerAction()
-    {
-        System.out.println("Enter your admin password :");
-        String tryPass=Main.scanner.nextLine();
-        if(tryPass.equals(developer_password))
-        {
-            System.out.println("What would you like to do ?");
-            System.out.println("Enter 1 to Add a Movie");
-            System.out.println("Enter 2 to Delete a Movie");
-            System.out.println("Enter 3 to for logging out and going back to Home page");
-            int choice=Main.scanner.nextInt();
-            switch(choice)
-            {
-                case 1:
-                addMovies();
-                developerAction();
-                break;
-                case 2:
-                deleteMovies();
-                developerAction();
-                break;
-                case 3:
-                System.out.println("Going Back to Home Page");
-                Main.HomePage();
-                break;
-                default:
-                System.out.println("Enter valid choice next time,Going back to home page by default");
-                Main.HomePage();
-                break;
-            }
-        }
-        else
-        {
-            System.out.println("Invalid Password!");
-            System.out.println("Try again!");
-            System.out.println("Back To Home Page");
-            Main.HomePage();
-        }
-    }
-    static void addMovies() {
-        boolean check = false;
-        System.out.println("How many Genre does your movie have?(1-7)//Press 8 to exit.");
-        int NumOfGenre = Main.scanner.nextInt();
-        do {
-            if(NumOfGenre==8)
-            {
-                return;
-            }
-            else if (NumOfGenre >= 1 && NumOfGenre <= 7) {
-                check = false;
-            } else {
-                System.out.println("Enter valid Number of Genre(1-7)/Press '8' to exit ");
-                NumOfGenre = Main.scanner.nextInt();
-                check = true;
-            }
-        } while (check);
-
-        String GenreofMovie[] = new String[NumOfGenre];
-
-        System.out.println("Available Genres:");
-        for (int i = 0; i < Movies.existingGenre.length; i++) {
-            System.out.println("*" + Movies.existingGenre[i]);
-        }
-        boolean check1 = false;
-        System.out.println("Enter Genres of Movies(In the above format)://Press Q to exit.");
-        for (int i = 0; i < NumOfGenre; i++) {
-            for (;;) {
-                GenreofMovie[i] = Main.scanner.nextLine();
-                if(GenreofMovie[i].equals("Q"))
-                {
-                    return;
-                }
-                for (int j = 0; j < Movies.existingGenre.length; j++) {
-                    if (GenreofMovie[i].equals(Movies.existingGenre[j])) {
-                        check1 = true;
-                        break;
-                    }
-                }
-                if (check1 == false) {
-                    System.out.println("Enter valid Genre or Press Q to exit.");
-                } else {
-                    break;
-                }
-            }
-        }
-        System.out.println("Enter the name of movie you want to add/Press Q to exit:");
-        String name = Main.scanner.nextLine();
-        if(name.equals("Q"))
-        {
-            return;
-        }
-        for (int i = 0; i < NumOfGenre; i++) {
-            switch (GenreofMovie[i]) {
-                case "Comedy":
-
-                    ComedyMovies.ComedyMovieslist[ComedyMovies.index] = new ComedyMovies(name, GenreofMovie);
-                    ComedyMovies.index++;
-                    break;
-                case "Action":
-
-                    ActionMovies.ActionMovieslist[ActionMovies.index] = new ActionMovies(name, GenreofMovie);
-                    ActionMovies.index++;
-                    break;
-                case "Slice of Life":
-                    SliceOfLifeMovies.SliceOfLifeMovieslist[SliceOfLifeMovies.index] = new SliceOfLifeMovies(name, GenreofMovie);
-                    SliceOfLifeMovies.index++;
-                    break;
-                case "Horror":
-                    HorrorMovies.HorrorMovieslist[HorrorMovies.index] = new HorrorMovies(name, GenreofMovie);
-                HorrorMovies.index++;
-                    break;
-                case "Science Fiction":
-                    ScienceFictionMovies.ScienceFictionMovieslist[ScienceFictionMovies.index] = new ScienceFictionMovies(name, GenreofMovie);
-                    ScienceFictionMovies.index++;
-                    break;
-                case "Romance":
-                    RomanceMovies.RomanceMovieslist[RomanceMovies.index] = new RomanceMovies(name, GenreofMovie);
-                    RomanceMovies.index++;
-                    break;
-                case "Animated":
-                    AnimatedMovies.AnimatedMovieslist[AnimatedMovies.index] = new AnimatedMovies(name, GenreofMovie);
-                    AnimatedMovies.index++;
-
-                    break;
-
-            }
-        }
-                
-                System.out.println("Enter the name of theatres you would like to add this movie to: ");
-                System.out.println("Available Theatres: ");
-                for(int i=0;i<Theatre.index;i++)
-                {
-                    System.out.println("* "+Theatre.TheatreList[i].name);
-                }
-                for(;;)
-                {   
-                    String theatre_name=Main.scanner.nextLine();
-                    for(int i=0;i<Theatre.index;i++)
-                    {
-                        if(Theatre.TheatreList[i].name.equals(theatre_name))
-                        {
-                            Theatre.TheatreList[i].availableMovies[Theatre.TheatreList[i].movieIndex]=name;
-                            Theatre.TheatreList[i].movieIndex++;
-                            System.out.println("Movie Successfully added to "+Theatre.TheatreList[i].name);
-                            check=true;
-                            break;
-                        }
-                    }
-                    if(check==false)
-                    {
-                        System.out.println("Invalid Theatre Name");
-                        System.out.println("Re-enter Theatre Name or press Q to exit.");
-                        theatre_name=Main.scanner.nextLine();
-                    }
-                    else
-                    {
-                        System.out.println("Enter another Theatre in which you would like to add this movie to or Press Q to exit: ");
-                        theatre_name=Main.scanner.nextLine();
-                    }
-                    if(theatre_name.equals("Q"))
-                    {
-                        System.out.println("Exited Add movie method succesfully");
-                        developerAction();
-                        break;
-                    }
-                }
-    }
-
-    static void deleteMovies() {
-        System.out.println("Enter the name of Movie you want to delete or press Q to exit");
-        String name = Main.scanner.nextLine();
-        boolean check = true;
-        for (; check;) {
-            if(name.equals("Q"))
-            {
-                return;
-            }
-            for (int i = 0; i < ComedyMovies.index; i++) {
-                if (name.equals(ComedyMovies.ComedyMovieslist[i].name)) {
-
-                    for (int j = i; j < ComedyMovies.index - 1; j++) {
-                        ComedyMovies.ComedyMovieslist[j] = ComedyMovies.ComedyMovieslist[j + 1];
-                    }
-                    ComedyMovies.ComedyMovieslist[ComedyMovies.index - 1] = null;
-                    ComedyMovies.index--;
-                    check = false;
-                    break;
-                }
-            }
-            for (int i = 0; i < ActionMovies.index; i++) {
-                if (name.equals(ActionMovies.ActionMovieslist[i].name)) {
-
-                    for (int j = i; j < ActionMovies.index - 1; j++) {
-                        ActionMovies.ActionMovieslist[j] = ActionMovies.ActionMovieslist[j + 1];
-                    }
-                    ActionMovies.ActionMovieslist[ActionMovies.index - 1] = null;
-                    ActionMovies.index--;
-                    check = false;
-                    break;
-                }
-            }
-            for (int i = 0; i < SliceOfLifeMovies.index; i++) {
-                if (name.equals(SliceOfLifeMovies.SliceOfLifeMovieslist[i].name)) {
-
-                    for (int j = i; j < SliceOfLifeMovies.index - 1; j++) {
-                        SliceOfLifeMovies.SliceOfLifeMovieslist[j] = SliceOfLifeMovies.SliceOfLifeMovieslist[j + 1];
-                    }
-                    SliceOfLifeMovies.SliceOfLifeMovieslist[SliceOfLifeMovies.index - 1] = null;
-                    SliceOfLifeMovies.index--;
-                    check = false;
-                    break;
-                }
-            }
-            for (int i = 0; i < HorrorMovies.index; i++) {
-                if (name.equals(HorrorMovies.HorrorMovieslist[i].name)) {
-
-                    for (int j = i; j < HorrorMovies.index - 1; j++) {
-                        HorrorMovies.HorrorMovieslist[j] = HorrorMovies.HorrorMovieslist[j + 1];
-                    }
-                    HorrorMovies.HorrorMovieslist[HorrorMovies.index - 1] = null;
-                    HorrorMovies.index--;
-                    check = false;
-                    break;
-                }
-            }
-            for (int i = 0; i < ScienceFictionMovies.index; i++) {
-                if (name.equals(ScienceFictionMovies.ScienceFictionMovieslist[i].name)) {
-
-                    for (int j = i; j < ScienceFictionMovies.index - 1; j++) {
-                        ScienceFictionMovies.ScienceFictionMovieslist[j] = ScienceFictionMovies.ScienceFictionMovieslist[j
-                                + 1];
-                    }
-                    ScienceFictionMovies.ScienceFictionMovieslist[ScienceFictionMovies.index - 1] = null;
-                    ScienceFictionMovies.index--;
-                    check = false;
-                    break;
-                }
-            }
-            for (int i = 0; i < RomanceMovies.index; i++) {
-                if (name.equals(RomanceMovies.RomanceMovieslist[i].name)) {
-
-                    for (int j = i; j < RomanceMovies.index - 1; j++) {
-                        RomanceMovies.RomanceMovieslist[j] = RomanceMovies.RomanceMovieslist[j + 1];
-                    }
-                    RomanceMovies.RomanceMovieslist[RomanceMovies.index - 1] = null;
-                    RomanceMovies.index--;
-                    check = false;
-                    break;
-                }
-            }
-            for (int i = 0; i < AnimatedMovies.index; i++) {
-                if (name.equals(AnimatedMovies.AnimatedMovieslist[i].name)) {
-
-                    for (int j = i; j < AnimatedMovies.index - 1; j++) {
-                        AnimatedMovies.AnimatedMovieslist[j] = AnimatedMovies.AnimatedMovieslist[j + 1];
-                    }
-                    AnimatedMovies.AnimatedMovieslist[AnimatedMovies.index - 1] = null;
-                    AnimatedMovies.index--;
-                    check = false;
-                    break;
-                }
-            }
-
-            if (check) {
-                System.out.println("Invalid Name: ");
-                System.out.println("Re-enter the name of movie or press 'Q' to exit:");
-                name = Main.scanner.nextLine();
-                
-            } else {
-                break;
-            }
-        }
-        //For deleting Movie from Theatre
-        for(int i=0;i<Theatre.index;i++)
-        {
-            if(name.equals("Q"))
-            {
-                break;
-            }
-            for(int j=0;j<Theatre.TheatreList[i].movieIndex;j++)
-            {
-                if(Theatre.TheatreList[i].availableMovies[j].equals(name))
-                {
-                    for(int k=j;k<Theatre.TheatreList[i].movieIndex-1;k++)
-                    {
-                        Theatre.TheatreList[i].availableMovies[k]=Theatre.TheatreList[i].availableMovies[k+1];
-                    }
-                        Theatre.TheatreList[i].availableMovies[Theatre.TheatreList[i].movieIndex-1]=null;
-                        Theatre.TheatreList[i].movieIndex--;
-                }
-            }
-        }
-    }
-}
 
 class Theatre 
 {
@@ -1399,41 +1443,3 @@ class Theatre
     }
 }
 
-class Main {
-   static Scanner scanner=new Scanner(System.in);
-    static void HomePage()
-    {
-        System.out.println("Enter 1 for Developer");
-        System.out.println("Enter 2 for Customer");
-        System.out.println("Enter 3 To Terminate programme");
-        int choice=scanner.nextInt();
-		
-        switch(choice)
-        {
-            case 1:
-            Developer.developerAction();
-            break;
-            case 2:
-            Customer.customerAction();
-            break;
-            case 3:
-            System.out.println("Program terminated successfully");
-            break;
-            default:
-            System.out.println("Enter valid choice!");
-            HomePage();
-            break;
-        }
-    }
-    public static void main(String[] args) {
-        ComedyMovies.defaultMovies();
-        RomanceMovies.defaultMovies();
-        ActionMovies.defaultMovies();
-        SliceOfLifeMovies.defaultMovies();
-        HorrorMovies.defaultMovies();
-        AnimatedMovies.defaultMovies();
-        ScienceFictionMovies.defaultMovies();
-        Theatre.defaultTheatre();
-        HomePage();
-    }
-}
